@@ -1,11 +1,20 @@
 const express=require('express')
 const app=express();
 const cors=require('cors');
-const {Blog,User,Comment}=require('./db')
+const mongoose=require('mongoose');
+const Blog=require('./models/Blog')
+const User=require('./models/User')
+const Comment=require('./models/Comment');
+
 app.use(cors());
 app.use(express.json());
 
 const PORT=3000;
+
+mongoose.connect('mongodb://127.0.0.1:27017/bloggster')
+.then(()=>console.log('MongoDB connected'))
+.catch(err=>console.log(err))
+
 
 app.get('/',(req,res)=>res.send('Hello'));
 
@@ -24,6 +33,7 @@ app.post('/signin',async(req,res)=>{
         res.send('User signed in');
     }
 })
+
 app.get('/posts',async (req,res)=>{
     const posts= await Blog.find({});
     res.json(posts);
@@ -53,58 +63,52 @@ app.delete('/posts/:id',async(req,res)=>{
 app.put('/posts/:postId', async (req, res) => {
     try {
       const postId = req.params.postId;
-  
-      // Find the existing blog post
+        // Find the existing blog post
       const existingPost = await Blog.findById(postId);
-  
       if (!existingPost) {
         return res.status(404).send('Blog post not found');
       }
-  
       // Update the existing blog post with new data using the spread operator
-      const updatedPost=await Blog.findByIdAndUpdate({_id:postId},{...req.body},{ new: true });
-  
+      const updatedPost=await Blog.findByIdAndUpdate({_id:postId},{...req.body},{ new: true });  
       // Save the updated blog post
       await updatedPost.save();
-      
       res.json(updatedPost);
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
     }
   });
-  
+  app.get('/posts/:postId',async (req,res)=>{
+    const postId=req.params.postId;
+    const post=await Blog.findById({_id:postId});
+    if(!post){
+        res.status(401).send('Post not found!');
+    }
+    res.json(post);
+  })
 app.post('/comment', async (req, res) => {
     try {
       const commentData = req.body;
-  
       // Check if the author (user) exists
       const user = await User.findOne({ username: commentData.author });
-  
       if (!user) {
         return res.status(404).send('User not found');
       }
-  
       // Create a new comment
       const newComment = new Comment({
         content: commentData.content,
         author: user._id,
         postID: commentData.postID,
       });
-  
       // Save the new comment to the Comment collection
       await newComment.save();
-  
       // Update the comments array in the corresponding blog post
       const blogPost = await Blog.findById(commentData.postID);
-  
       if (!blogPost) {
         return res.status(404).send('Blog post not found');
       }
-  
       blogPost.comments.push(newComment._id);
       await blogPost.save();
-  
       res.send('Commented successfully');
     } catch (error) {
       console.error(error);
