@@ -24,6 +24,18 @@ const blogSchema=new mongoose.Schema({
         type: Date,
         default: Date.now,  
     },
+    popularity: {
+        type: Number,
+        default: 0, // Initialize with zero popularity
+    },
+    upvote:{
+        type:Number,
+        default:0
+    },
+    downvote:{
+        type:Number,
+        default:0
+    }
 });
 const Blog=mongoose.model('blog',blogSchema);
 
