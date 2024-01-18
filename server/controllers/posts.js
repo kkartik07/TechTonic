@@ -1,7 +1,6 @@
-const jwt=require('jsonwebtoken');
 const Blog=require('../models/Blog')
 const User=require('../models/User')
-const Comment=require('../models/Comment')
+const Comment=require('../models/Comment');
 
 async function getAllPosts(req,res){
     const posts= await Blog.find({});
@@ -9,29 +8,38 @@ async function getAllPosts(req,res){
 }
 
 async function getPost(req,res){
+    // post is added to req in the middleware itself, so no fetch
     const post=req.post;
     res.send(post);
 }
 
 async function createPost(req,res){
-    const post=req.body;
-    const existingUser = await User.findOne({ username:post.author});
-    const newBlog = new Blog({
-        content: post.content,
-        author: existingUser?._id, // Make sure this is an ObjectId
-        title:post.title
+    try{
+        const post=req.body;
+        const existingUser = await User.findOne({ username:post.author});
+        const newBlog = new Blog({
+            content: post.content,
+            author: existingUser?._id, // Make sure this is an ObjectId
+            title:post.title
         });
-    await newBlog.save();
-    res.json(newBlog)
+        await newBlog.save();
+        res.json(newBlog)
+    }catch(err){
+        res.send(err)
+    }
 } 
 
 async function deletePost(req,res){
-    const id=req.params.postId;
-    const post=await Blog.findOneAndDelete({_id:id});
-    if(!post){
-        res.send('Post doesnt exist, Try Again!');
+    try{
+        const id=req.params.postId;
+        const post=await Blog.findOneAndDelete({_id:id});
+        if(!post){
+            res.send('Post doesnt exist, Try Again!');
+        }
+        res.json({message:'Post deleted by user successfully'});
+    }catch(err){
+        res.send(err)
     }
-    res.json({message:'Post deleted by user successfully'});
 }
 
 async function editPost(req,res){
