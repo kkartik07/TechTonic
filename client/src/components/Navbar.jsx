@@ -7,7 +7,6 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Button from '@mui/material/Button';
 import './Navbar.css'
 import {Link} from 'react-router-dom'
-
 function ElevationScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
@@ -40,7 +39,7 @@ export default function ElevateAppBar(props) {
         <AppBar className='nav'>
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Link to='/' className='link'><img src='icon.png' width={'30px'} alt='logo'/><b>Bloggify</b></Link>
+              <Link to='/' className='link'><img src="/images/icon.png" width={'30px'} alt='logo'/><b>Bloggify</b></Link>
             </Typography>
             <Link to='/login' className='link'><Button color="inherit">Login</Button></Link>
           </Toolbar>
