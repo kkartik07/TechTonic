@@ -1,0 +1,19 @@
+.comment{
+    background-color: rgb(229, 230, 232);
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 12px;
+}
+#g3{
+    margin-right: 10px;
+    margin-left: 10px;
+    font-weight: 600;
+    font-size: large;
+
+}
+#comment{
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: 300;
+}
