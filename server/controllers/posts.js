@@ -115,7 +115,7 @@ async function upvotePost(req, res) {
         // Save the updated post
         await post.save();
 
-        res.json(post);
+        res.json(post.upvote);
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -133,14 +133,9 @@ async function downvotePost(req, res) {
         if (!post) {
             return res.status(404).send('Post not found');
         }
-
-        // Increment the downvotes
         post.downvote += 1;
-
-        // Save the updated post
         await post.save();
-
-        res.json(post);
+        res.json(post.downvote);
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
