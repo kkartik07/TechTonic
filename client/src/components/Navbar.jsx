@@ -20,7 +20,6 @@ export default function ElevateAppBar() {
 
   useEffect(() => {
     let name = localStorage.getItem('username');
-    console.log('sssssssssssss')
     if (name) {
       setUsername(capitalize(name));
     }
@@ -44,7 +43,9 @@ export default function ElevateAppBar() {
           {username &&
             <li className="user-info">
               <div><Create /></div>
-              <img src="/images/avatar.gif" width="32px" alt="avatar" className="avatar" />
+              <Link to='/profile'>
+              <img src="/images/avatar.png" width="32px" alt="avatar" className="avatar" />
+              </Link>
               <div className="user-details">
                 <div className="username">{username}</div>
               </div>

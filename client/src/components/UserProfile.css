@@ -1,0 +1,85 @@
+#details{
+    display: flex;
+    flex-direction: column;
+}
+.box3{
+    margin-top: 20px;
+    background-color: whitesmoke;
+    border-radius: 12px;
+    height:120px;
+    width:300px;
+    padding: 30px;
+    font-size: 35px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+#bigbox{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    font-weight:lighter;
+}
+#value{
+    float: right;
+    font-size: 50px;
+    font-weight: 900;
+}
+
+#icons{
+    margin-top: 20px;
+    float: right;
+    margin-left: 20px;
+}
+
+#box4{
+    display: flex;
+    flex-wrap: wrap;
+}
+.preview{
+    height: 70px;
+    background-color: whitesmoke;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100vw;
+    margin-left:30px;
+    margin-right:30px;
+    position:relative;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+}
+
+#head{
+    font-size: 25px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#counts{
+    display: flex;
+    width: 93vw;
+    position:absolute;
+    bottom:10px;
+
+}
+#view{
+    transition: all 0.1s;
+    position: absolute;
+    bottom: 60px;
+    margin-left: 90%;
+}#view:hover{
+    scale:1.02;
+    transform: translateX(5px);
+}
+#h2{
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+#g5{
+    display: flex;
+    font-size: 40px;
+    align-items: center;
+    margin:0px 0 30px 20px
+}

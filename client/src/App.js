@@ -7,6 +7,7 @@ import NewPost from './components/NewPost'
 import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
 import Signup from './components/Signup';
 import EditPost from './components/EditPost';
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/posts/:postId' element={<><Navbar/><Post/></>}/>
           <Route path='/post' element={<><Navbar/><NewPost/></>}/>
           <Route path='/edit/:id' element={<><Navbar/><EditPost/></>}/>
+          <Route path='/profile' element={<><Navbar/><UserProfile/></>}/>
         </Routes>
       </div>
     </Router>

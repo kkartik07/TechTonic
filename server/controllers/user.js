@@ -10,7 +10,7 @@ async function createAccount(req, res) {
     const user = new User(userBody);
     await user.save();
     const token = jwt.sign({username:user.username,userId: user._id}, SECRET);
-    res.json({ token });
+    res.json({ token ,_id:user._id});
 }
 
 async function login(req, res) {
@@ -22,7 +22,7 @@ async function login(req, res) {
     } else {
 
     const token = jwt.sign({ username:user.username,userId: user._id }, SECRET);
-        res.json({ token });
+        res.json({ token ,_id:user._id});
     }
 }
 
@@ -43,14 +43,16 @@ async function userAnalytics(req,res){
         posts.map(post=>totalDownvotes+=post.downvote);
         posts.map(post=>totalComments+=post.comments.length);
         
-        const details={
+        const data={
             posts,
-            totalViews,
-            totalUpvotes,
-            totalDownvotes,
-            totalComments
+            details:{
+                totalViews,
+                totalUpvotes,
+                totalDownvotes,
+                totalComments
+            }
         }
-        res.json(details)
+        res.json(data)
     }catch(err){
         res.status(401).send('Error! Try again')
     }
