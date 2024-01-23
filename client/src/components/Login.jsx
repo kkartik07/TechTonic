@@ -17,6 +17,7 @@ function Login() {
     const response=await axios.post('http://localhost:3001/signin',body);
     if(response){
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('_id', response.data._id);
       localStorage.setItem('username',username);
       navigate('/',{replace: true});
     }
