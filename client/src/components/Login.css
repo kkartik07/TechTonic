@@ -12,7 +12,7 @@
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    height: 300px;
+    height: fit-content;
     border-radius: 15px;
     width: 400px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -45,7 +45,7 @@
     cursor: pointer;
     font-size: medium;
     transition: all 0.3s ease;
-    margin-top: auto;
+    margin-top: 40px;
 }
 
 .login-btn:hover {

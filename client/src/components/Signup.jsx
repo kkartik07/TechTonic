@@ -1,27 +1,29 @@
 import React,{useState} from 'react'
 import './Login.css'
 import axios from 'axios'
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
-function Login() {
+function Signup() {
   const navigate = useNavigate();
   const [username,setUsername]=useState("");
   const [password,setPassword]=useState("");
+  const [email,setEmail]=useState("");
 
-  const handleLogin=async()=>{
+  const handleSignup=async()=>{
     const body={
       username,
-      password
+      password,
+      email
     }
 
-    const response=await axios.post('http://localhost:3001/signin',body);
+    const response=await axios.post('http://localhost:3001/signup',body);
     if(response){
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username',username);
       navigate('/',{replace: true});
     }
     else {
-      console.log('Login failed. Incorrect username or password.');
+      console.log('Signup failed. Incorrect username or password.');
     }
   }
   return (
@@ -32,15 +34,14 @@ function Login() {
             <hr/>
             <div>
                 <input type="text" placeholder="User Name" className="form-control" onChange={(e)=>setUsername(e.target.value)} />
+                <input type="text" placeholder="Email" className="form-control" onChange={(e)=>setEmail(e.target.value)}/>
                 <input type="password" placeholder="Password" className="form-control" onChange={(e)=>setPassword(e.target.value)}/>
             </div>
-            <button className="login-btn" onClick={handleLogin}>Login</button>
-            <Link to='/signup' className='link' style={{textAlign:'center',marginTop: 20,fontSize:18,color:'darkpurple'
-            }}>New User? Register</Link>
+            <button className="login-btn" onClick={handleSignup}>Signup</button>
         </div>
     </div>
     </div>
   )
 }
 
-export default Login
+export default Signup;
