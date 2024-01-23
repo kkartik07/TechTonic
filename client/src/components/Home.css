@@ -4,3 +4,27 @@
     height: 50vh;
     justify-content: space-around;
 }
+.headdrop{
+    color:red;
+    font-size: 90px;
+    font-weight: bolder;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    text-align: center;
+    background: -webkit-linear-gradient(
+    75deg,
+    rgb(15, 5, 216) 0%,
+    rgb(33, 33, 231) 21%,
+    rgb(14, 92, 176) 40%,
+    rgb(19, 221, 184) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#g4{
+    color:rgb(1, 90, 1) !important;
+  -webkit-text-fill-color:rgb(5, 56, 138);
+
+}

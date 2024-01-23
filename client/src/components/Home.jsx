@@ -28,13 +28,16 @@ function Home() {
 
 
   return (
-    <div className='container'>
-      {posts.map((post)=>{
-        return (
+    <>
+      <div className='headdrop'><span id='g4'>Your </span> Ideas, <span id='g4'>Your</span> Voice, <span id='g4'>Our</span> Platform.</div>
+      <div className='container'>
+        {posts.map((post)=>{
+          return (
             <PostCard key={post._id} post={post}/>
-        )
-      })}
-    </div>
+            )
+          })}
+      </div>
+    </>
   )
 }
 
