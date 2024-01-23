@@ -6,9 +6,9 @@ require('dotenv').config();
 
 
 const {getAllPosts,getPost,createPost,deletePost,editPost,createComment,upvotePost,downvotePost}=require('./controllers/posts.js');
-const {login,createAccount}=require('./controllers/user.js')
+const {login,createAccount, userAnalytics}=require('./controllers/user.js')
 const {getUser, getComments}=require('./controllers/api.js')
-const {auth,isSignedIn,incrementPopularity}=require('./middlewares/util.js')
+const {auth,isSignedIn,incrementPopularity, auth2}=require('./middlewares/util.js')
 
 app.use(cors());
 app.use(express.json());
@@ -22,6 +22,7 @@ app.get('/',(req,res)=>res.send('Hello'));
 
 app.post('/signup',createAccount)
 app.post('/signin',login)
+app.get('/profile/:id',auth2,userAnalytics);
 
 app.get('/posts',getAllPosts)
 app.post('/posts',auth,createPost)

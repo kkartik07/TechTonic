@@ -1,6 +1,7 @@
 require('dotenv').config();
 const jwt=require('jsonwebtoken')
 const Blog =require('../models/Blog')
+const User =require('../models/User')
 const SECRET=process.env.SECRET;
 
 
@@ -29,6 +30,7 @@ const auth = async(req, res, next) => {
             // For other HTTP methods, continue with the original logic
             if (req.body.author === decoded.username) {
                 req.username = decoded.username;
+                req.user=decoded;
                 next();
             } else {
                 res.status(403).send('User not matching');
@@ -74,6 +76,32 @@ const incrementPopularity=async(req,res,next)=>{
     }
   
   }
+
+
+
+  const auth2 = async(req, res, next) => {
+    const token = req.header('Authorization')?.split(' ')[1];
+    
+    if (!token) {
+        return res.status(401).send('Access denied. No token provided.');
+    }
+  
+    try {
+        const decoded = jwt.verify(token, SECRET);
+            // Check if the user from the token matches the author of the post
+            const id = req.params.id; // Adjust as per your route structure
+            const user = await User.findById({_id:id});
+            if (user && user._id.equals(decoded.userId)) {
+                // req.username = decoded.username;
+                req.user = decoded;
+                next();
+            } else {
+              res.status(401).send('User not authorized');
+        }
+    } catch (error) {
+        res.status(401).send('Invalid token');
+    }
+  };
   
 
-  module.exports={auth,isSignedIn,incrementPopularity}
+  module.exports={auth,isSignedIn,incrementPopularity,auth2}
