@@ -6,19 +6,26 @@
     width:80%;
     padding: 20px;
     display: flex;
+
 }
 h2{
     font-size: 50px;
 }
-
-.sidebar{
+.side{
     flex:0.15;
-    height:330px;
-    background-color: aliceblue;
+    height:fit-content;
     border-radius: 20px;
-    padding: 25px;
     margin-right: 30px;
 }
+.sidebar{
+    /* height:350px; */
+    background-color: aliceblue;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    padding: 25px;
+    /* margin-right: 30px; */
+}
+
 .postbody{
     flex:0.8;
     background-color: aliceblue;
@@ -43,7 +50,7 @@ h2{
     padding: 12px;
     border-radius: 10px;
     max-height: 500px;
-    overflow-y: scroll;
+    overflow-y:auto;
     font-size: 25px;
     font-weight: 400;
 }
@@ -75,8 +82,22 @@ h2{
     padding: 10px;
     margin-right: 20px;
     max-width: 100%;
-    display: flex;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 #btn2{
     margin-top: 15px;
+}
+
+.deletemodal{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400;
+    color:black;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

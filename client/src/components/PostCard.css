@@ -10,6 +10,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+
 
 }
 .post:hover{
@@ -22,6 +24,7 @@ b{
 .content{
     font-size: 20px;
 }
+
 .counts{
     display: flex;
     justify-content: space-between;
@@ -33,4 +36,15 @@ b{
 }
 hr{
     margin-bottom: 10px;
+}
+
+#viewpost{
+    transition: all 0.1s;
+    position: absolute;
+    bottom: 60px;
+    margin-left: 370px;;
+}
+#viewpost:hover{
+    scale:1.02;
+    transform: translateX(5px);
 }
