@@ -42,7 +42,6 @@ const auth = async(req, res, next) => {
   // to check if a user is signed in
   const isSignedIn = (req, res, next) => {
     const token = req.header('Authorization')?.split(' ')[1];
-    
     if (!token) {
       return res.status(401).send('Access denied. No token provided.');
     }
@@ -50,7 +49,7 @@ const auth = async(req, res, next) => {
     try {
       const decoded = jwt.verify(token, SECRET);
       if(!decoded)res.send('Invalid Token');
-      req.userId=decoded.userId;
+      req.user=decoded;
       next();
     } catch (error) {
       res.status(403).send('Please Login to make a comment');
