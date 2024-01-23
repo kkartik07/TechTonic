@@ -3,16 +3,22 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Login from './components/Login'
 import Post from './components/Post'
+import NewPost from './components/NewPost'
 import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
+import Signup from './components/Signup';
+import EditPost from './components/EditPost';
+
 function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar/>
         <Routes>
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<><Navbar/><Home/></>}/>
           <Route path='/login' element={<Login/>}/>
-          <Route path='/posts/:postId' element={<Post/>}/>
+          <Route path='/signup' element={<Signup/>}/>
+          <Route path='/posts/:postId' element={<><Navbar/><Post/></>}/>
+          <Route path='/post' element={<><Navbar/><NewPost/></>}/>
+          <Route path='/edit/:id' element={<><Navbar/><EditPost/></>}/>
         </Routes>
       </div>
     </Router>
