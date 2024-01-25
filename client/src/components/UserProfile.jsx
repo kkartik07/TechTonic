@@ -7,12 +7,25 @@ import ForumIcon from '@mui/icons-material/Forum';
 import axios from 'axios';
 import PostPreview from './PostPreview';
 import { capitalize } from '@mui/material';
+import SwapVertIcon from '@mui/icons-material/SwapVert';
 
 function UserProfile() {
   const id=localStorage.getItem('_id')
   const username=localStorage.getItem('username')
   const [posts,setPosts]=useState([]);
   const [details,setDetails]=useState({});
+  const [isAscending,setIsAscending]=useState(false);
+
+  const handleSort = () => {
+    const newPosts = [...posts];
+    newPosts.sort((a, b) => {
+      if (isAscending) return a.popularity - b.popularity;
+      else return b.popularity - a.popularity;
+    });
+    setPosts(newPosts);
+    setIsAscending(!isAscending);
+  };
+  
   
   useEffect(() => {
     const getPosts = async () => {
@@ -67,7 +80,11 @@ function UserProfile() {
       </div>
       <br></br>
       <hr/>
-      <h2 id='h2'>User's Posts</h2>
+      <h2 id='h2'>User's Posts
+      <SwapVertIcon style={{float:'right',marginRight: 50,
+      
+      }} onClick={handleSort} fontSize='larger'/>
+      </h2>
       <div id='box4'>
       {posts.map((post)=>{
           return (
