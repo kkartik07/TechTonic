@@ -8,7 +8,8 @@ async function getUser(req,res){
         if(!user){
             res.send("User with this ID doesn't exist")
         }
-        return res.json(user.username);
+        
+        return res.json(user);
     }catch(error){
         res.status(404).send("Error fetching user! Try Again")
     }

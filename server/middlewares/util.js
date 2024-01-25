@@ -47,7 +47,6 @@ const auth = async(req, res, next) => {
     if (!token) {
       return res.status(401).send('Access denied. No token provided.');
     }
-    
     try {
       const decoded = jwt.verify(token, SECRET);
       if(!decoded)res.send('Invalid Token');

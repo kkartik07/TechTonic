@@ -6,6 +6,7 @@ import TrendingUpTwoToneIcon from '@mui/icons-material/TrendingUpTwoTone';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { capitalize } from '@mui/material';
+import Follow from './Follow';
 
 
 const truncateContent = (content, maxWords) => {
@@ -24,20 +25,21 @@ function PostCard({ post }) {
   const [upvotes, setUpvotes] = useState(post ? post.upvote : 0);
   const [downvotes, setDownvotes] = useState(post ? post.downvote : 0);
   useEffect(() => {
-    async function getUsername() {
+    async function getUser() {
       try {
-        let name = await axios.get(`http://localhost:3001/api/user/${post.author}`);
-        if (name) setUsername(capitalize(name.data))
+        let user = await axios.get(`http://localhost:3001/api/user/${post.author}`);
+        if (user) setUsername(capitalize(user.data.username))
       } catch (err) {
         console.log(err)
       }
     }
-    getUsername();
+    getUser();
     setUpvotes(post.upvote)
     setDownvotes(post.downvote)
   }, [])
 
-  const handleUpvote = async () => {
+  const handleUpvote = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.post(`http://localhost:3001/posts/${post._id}/upvote`);
       if (response) {
@@ -48,7 +50,8 @@ function PostCard({ post }) {
     }
 
   };
-  const handleDownvote = async () => {
+  const handleDownvote = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.post(`http://localhost:3001/posts/${post._id}/downvote`);
       if (response) {
@@ -59,27 +62,30 @@ function PostCard({ post }) {
     }
   };
   return (
-    <div className='post'>
+    <>
       <Link to={`/posts/${post._id}`} className='link'>
-        <div id='card'>
-          <div><p>{username ? username : "Anonymous"}</p>
-          <div><b>{post.title}</b></div>
-          <div className='content'>{truncatedContent}</div>
+        <div className='post'>
+          <div id='card'>
+            <div><p style={{display:'flex', alignItems:'center',float:'right',fontWeight:600}}><span style={{marginRight: 12,fontSize:20
+            }}>{username ? username : "Anonymous"}</span> <Follow author={post.author}/></p>
+              <div><b>{post.title}</b></div>
+              <div className='content'>{truncatedContent}</div>
+            </div>
+            <div id='viewpost'>
+              View Post &rarr;
+            </div>
           </div>
-          <div id='viewpost'>
-            View Post &rarr; 
+          <div>
+            <hr />
+            <div className='counts'>
+              <div className='box'><TrendingUpTwoToneIcon />Popularity: {post.popularity}</div>
+              <div className='box'><ThumbUpIcon onClick={handleUpvote} className='icon' />Upvotes: {upvotes} </div>
+              <div className='box'><ThumbDownIcon onClick={handleDownvote} className='icon' />Downvotes: {downvotes}</div>
+            </div>
           </div>
         </div>
       </Link>
-      <div>
-        <hr />
-        <div className='counts'>
-          <div className='box'><TrendingUpTwoToneIcon />Popularity: {post.popularity}</div>
-          <div className='box'><ThumbUpIcon onClick={handleUpvote} className='icon' />Upvotes: {upvotes} </div>
-          <div className='box'><ThumbDownIcon onClick={handleDownvote} className='icon' />Downvotes: {downvotes}</div>
-        </div>
-      </div>
-    </div>
+    </>
   )
 }
 export default PostCard;

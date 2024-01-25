@@ -17,7 +17,6 @@ function EditPost() {
         );
         setContent(()=>response.data.content);
         setTitle(()=>response.data.title);
-        console.log(title)
       } catch (error) {
         console.error("Error fetching post details:", error);
       }

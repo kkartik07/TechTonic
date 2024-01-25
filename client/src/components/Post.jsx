@@ -15,6 +15,7 @@ import Create from "./Create";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Follow from './Follow';
 
 import { Link,useNavigate } from "react-router-dom";
 
@@ -42,7 +43,7 @@ const PostDetailsPage = () => {
         let name = await axios.get(
           `http://localhost:3001/api/user/${response.data.author}`
         );
-        setUsername(name.data);
+        setUsername(capitalize(name.data.username));
         setUpvotes(response.data.upvote);
         setDownvotes(response.data.downvote);
 
@@ -132,7 +133,6 @@ const PostDetailsPage = () => {
         );
         commentsArray.push(commentResponse.data);
       }
-
       setComments(commentsArray);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -179,7 +179,8 @@ const PostDetailsPage = () => {
           <div className="side">
           <div className="sidebar">
             <div className="outbox">
-              <div className="bold">Posted By :</div> {capitalize(username)}
+              <div className="bold">Posted By :</div> {username}
+              <Follow author={post.author}/>
             </div>
             <hr />
             <div className="outbox">

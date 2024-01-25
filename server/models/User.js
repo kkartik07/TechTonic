@@ -14,6 +14,14 @@ const userSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true,
+    },
+    subscriptions:{
+        type:Array,
+        default:[]
+    },
+    subscribers:{
+        type:Number,
+        default:0
     }
 },{timestamps:true});
 

@@ -76,7 +76,7 @@ async function createComment(req, res) {
         // Create a new comment
         const newComment = new Comment({
             content: commentData.content,
-            author: user.username,
+            author: req.user.userId,
             postID: commentData.postID,
         });
         // Save the new comment to the Comment collection

@@ -26,6 +26,29 @@ async function login(req, res) {
     }
 }
 
+async function subscribe(req,res){
+    const author=req.params.id;
+    const id=req.user.userId;
+    const user = await User.findOne({_id:author});
+    if(!user){
+        res.status(401).send("User not found!");
+        return;
+    }
+    const subscriber = await User.findOne({_id:id});
+    if(!subscriber){
+        res.status(401).send("You are not found!");
+        return;
+    }
+    if(subscriber.subscriptions.includes(author)){res.status(404).send("You are already a subscriber");return;}
+    user.subscribers+=1;
+    subscriber.subscriptions.push(author);
+    const response=await User.findByIdAndUpdate({_id:author},{...user},{new:false})
+    const response2=await User.findByIdAndUpdate({_id:id},{...subscriber},{new:false})
+    if(!response || !response2){
+        res.status(404).send('Failed to subscribe');
+    }
+    res.send("Subscribed successfully")
+}
 
 async function userAnalytics(req,res){
     try{
@@ -57,4 +80,4 @@ async function userAnalytics(req,res){
         res.status(401).send('Error! Try again')
     }
 }
-    module.exports={createAccount, login,userAnalytics}
+    module.exports={createAccount, login,userAnalytics,subscribe}
