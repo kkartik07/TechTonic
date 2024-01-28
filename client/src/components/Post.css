@@ -46,7 +46,7 @@ h2{
 }
 .postcontent{
     margin: 20px 0 20px 0;
-    background-color: rgb(229,230,232);
+    background-color: rgb(231, 231, 232);
     padding: 12px;
     border-radius: 10px;
     max-height: 500px;
@@ -100,4 +100,20 @@ h2{
     border-radius: 10px;
     padding: 20px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+#tag{
+    color:black;
+    border-radius: 8px;
+    font-size: 15px;
+    width:fit-content;
+    padding: 5px 12px 5px 12px;
+    margin-right: 10px;
+    background-color:white;
+    font-style: italic;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 6px 0px;
+}
+#tags{
+    display: flex;
+    margin-left: -16px;
 }

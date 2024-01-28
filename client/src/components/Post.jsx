@@ -28,7 +28,7 @@ const PostDetailsPage = () => {
   const [upvotes, setUpvotes] = useState(0);
   const [downvotes, setDownvotes] = useState(0);
   const [currentUser,setCurrentuser]=useState("");
-
+  const [tags,setTags]=useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -38,7 +38,8 @@ const PostDetailsPage = () => {
         const response = await axios.get(
           `http://localhost:3001/posts/${postId}`
         );
-        setPost(response.data);
+        if(!response)navigate(`/`,{replace:true})
+        if(response)setPost(response.data);
 
         let name = await axios.get(
           `http://localhost:3001/api/user/${response.data.author}`
@@ -46,7 +47,8 @@ const PostDetailsPage = () => {
         setUsername(capitalize(name.data.username));
         setUpvotes(response.data.upvote);
         setDownvotes(response.data.downvote);
-
+        setTags(response.data.tags);
+          console.log(response.data.tags,'sdsdsdsdsdsdsdsds')
         let curruser=localStorage.getItem('username');
         if(curruser){
           setCurrentuser((prev)=>curruser);
@@ -222,6 +224,11 @@ const PostDetailsPage = () => {
               <div>
                 <h2>{post.title}</h2>
                 <div style={{ fontSize: "20px" }}>
+                {tags.length>0 && <div id='tags'>
+                  {tags.map(tag=>(
+                    <div id='tag'>{tag}</div>
+                  ))}
+                </div>}
                   <span className="bold">Posted By :</span> {username}
                 </div>
               </div>

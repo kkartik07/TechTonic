@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './UserProfile.css'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -8,13 +8,13 @@ import axios from 'axios';
 import PostPreview from './PostPreview';
 import { capitalize } from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
-
+import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 function UserProfile() {
-  const id=localStorage.getItem('_id')
-  const username=localStorage.getItem('username')
-  const [posts,setPosts]=useState([]);
-  const [details,setDetails]=useState({});
-  const [isAscending,setIsAscending]=useState(false);
+  const id = localStorage.getItem('_id')
+  const username = localStorage.getItem('username')
+  const [posts, setPosts] = useState([]);
+  const [details, setDetails] = useState({});
+  const [isAscending, setIsAscending] = useState(false);
 
   const handleSort = () => {
     const newPosts = [...posts];
@@ -25,34 +25,43 @@ function UserProfile() {
     setPosts(newPosts);
     setIsAscending(!isAscending);
   };
-  
-  
+
+
   useEffect(() => {
     const getPosts = async () => {
       const headers = {
         Authorization: `Bearer ${localStorage.token}`,
         'Content-Type': 'application/json',
-    };
-        const response = await axios.get(`http://localhost:3001/profile/${id}`,{headers:headers});
-        if(!response)return;
-        console.log(response.data.posts)
-        setPosts(response.data.posts);
-        setDetails(response.data.details);
+      };
+      const response = await axios.get(`http://localhost:3001/profile/${id}`, { headers: headers });
+      if (!response) return;
+      console.log(response.data.posts)
+      setPosts(response.data.posts);
+      setDetails(response.data.details);
     };
     getPosts();
-}, []);
+  }, []);
 
   return (
     <div>
       <div id='details'>
         <h2 id='h2'>User Analytics</h2>
         <div id='g5'>
-        <img src='/images/avatar.png' alt='logo' width={100} />
-        <div>
-          <div style={{marginLeft: 20,
-          
-          }}>Username: {capitalize(username)}</div>
-        </div>
+          <img src='/images/avatar.png' alt='logo' width={100} />
+          <div>
+            <div style={{
+              marginLeft: 20,
+
+            }}>Username: {capitalize(username)}</div>
+          </div>
+          <div id='follow'>
+            <div><SubscriptionsIcon style={{
+              marginRight: 10,
+            }} /><span id='fc'>{details.subscribers}</span> Followers</div>
+            <div> <SubscriptionsIcon style={{
+              marginRight: 10,
+            }} /><span id='fc'>{details.subscribedTo}</span> Followed</div>
+          </div>
         </div>
         <div id='bigbox'>
 
@@ -79,18 +88,19 @@ function UserProfile() {
         </div>
       </div>
       <br></br>
-      <hr/>
+      <hr />
       <h2 id='h2'>User's Posts
-      <SwapVertIcon style={{float:'right',marginRight: 50,
-      
-      }} onClick={handleSort} fontSize='larger'/>
+        <SwapVertIcon style={{
+          float: 'right', marginRight: 50,
+
+        }} onClick={handleSort} fontSize='larger' />
       </h2>
       <div id='box4'>
-      {posts.map((post)=>{
+        {posts.map((post) => {
           return (
-            <PostPreview key={post._id} post={post}/>
-            )
-          })}
+            <PostPreview key={post._id} post={post} />
+          )
+        })}
       </div>
     </div>
   )

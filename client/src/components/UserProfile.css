@@ -83,3 +83,15 @@
     align-items: center;
     margin:0px 0 30px 20px
 }
+
+#follow{
+    font-size: 25px;
+    display: flex;
+    width: 340px;
+    font-weight: 100;
+    margin-left: 35px;
+    justify-content: space-between;
+}
+#fc{
+    font-weight: 500;
+}

@@ -6,24 +6,39 @@ require('dotenv').config();
 const SECRET=process.env.SECRET;
 
 async function createAccount(req, res) {
-    const userBody = req.body;
-    const user = new User(userBody);
-    await user.save();
-    const token = jwt.sign({username:user.username,userId: user._id}, SECRET);
-    res.json({ token ,_id:user._id});
+    try{
+        const userBody = req.body;
+        const user = new User(userBody);
+        await user.save();
+        const token = jwt.sign({username:user.username,userId: user._id}, SECRET);
+        res.json({ token ,_id:user._id});
+    }
+    catch(err){
+        console.log(err)
+    }
 }
 
 async function login(req, res) {
     const userBody = req.body;
-    const user = await User.findOne({ username: userBody.username });
-
-    if (!user || user.length === 0 || user.password !== userBody.password) {
-        res.send('User not found or incorrect username/password');
-    } else {
-
-    const token = jwt.sign({ username:user.username,userId: user._id }, SECRET);
-        res.json({ token ,_id:user._id});
+    try {
+        const user = await User.findOne({ username: userBody.username });
+    
+        if (!user) {
+            res.status(401).send('User not found or incorrect username/password');
+            return;
+        }
+        if(user.password !== userBody.password){
+            res.status(401).send('Incorrect username/password');
+            return;
+        }
+    
+        const token = jwt.sign({ username: user.username, userId: user._id }, SECRET);
+        res.json({ token, _id: user._id });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
     }
+    
 }
 
 async function subscribe(req,res){
@@ -56,7 +71,10 @@ async function userAnalytics(req,res){
         if(!user){
             res.status(401).send('User not found!')
         }
-        const posts=await Blog.find({author:user.userId})
+        const posts=await Blog.find({author:user.userId});
+        const euser=await User.findOne({_id:user.userId});
+        let subscribers=euser.subscribers;
+        let subscribedTo=euser.subscriptions.length;
         let totalViews=0;
         let totalDownvotes=0;
         let totalUpvotes=0;
@@ -72,7 +90,9 @@ async function userAnalytics(req,res){
                 totalViews,
                 totalUpvotes,
                 totalDownvotes,
-                totalComments
+                totalComments,
+                subscribedTo,
+                subscribers
             }
         }
         res.json(data)
