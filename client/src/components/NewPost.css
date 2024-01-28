@@ -22,7 +22,7 @@ textarea{
     border-radius: 14px;
     padding: 15px;
     border:none;
-    min-height: 400px;
+    min-height: 300px;
     margin-bottom: 30px;
     font-size: 30px;    
 }
@@ -35,4 +35,12 @@ textarea{
 #publish{
     width:130px;
     border-radius: 8px;
+}
+#tags{
+    border-radius: 10px;
+    border:none;
+    min-height: 30px;
+    padding: 20px;
+    font-size: 18px;
+    margin-bottom: 30px;
 }

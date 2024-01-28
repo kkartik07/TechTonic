@@ -35,6 +35,10 @@ const blogSchema=new mongoose.Schema({
     downvote:{
         type:Number,
         default:0
+    },
+    tags:{
+        type:Array,
+        default:[]
     }
 });
 const Blog=mongoose.model('blog',blogSchema);

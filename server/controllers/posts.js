@@ -17,11 +17,14 @@ async function createPost(req, res) {
     try {
         const post = req.body;
         const existingUser = await User.findOne({ username: post.author });
+        if(!existingUser)res.status(401).send("User not found")
+        console.log(req.body.tagsArray,'ooooooooooo')
         const newBlog = new Blog({
             content: post.content,
             author: existingUser?._id, // Make sure this is an ObjectId
-            title: post.title
-        });
+            title: post.title,
+            tags:post.tagsArray
+        }); 
         await newBlog.save();
         res.json(newBlog)
     } catch (err) {

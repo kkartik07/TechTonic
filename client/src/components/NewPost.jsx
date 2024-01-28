@@ -5,13 +5,16 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 function NewPost() {
     const navigate=useNavigate()
-    const handleSubmit=async ()=>{
+    const handleSubmit=async()=>{
         const author=localStorage.getItem('username');
         if(!author){console.log('Login first'); return;}
+        const tagString=tags;
+        const tagsArray=tagString.split(",");
         const body={
             content,
             title,
-            author
+            author,
+            tagsArray
         }
         const headers = {
             Authorization: `Bearer ${localStorage.token}`,
@@ -23,6 +26,7 @@ function NewPost() {
             if(response){
                 setContent('');
                 setTitle('');
+                setTags("")
                 navigate(`/posts/${response.data._id}`,{replace:true})
             }
         }catch(err){
@@ -30,13 +34,15 @@ function NewPost() {
         }
     }
     const [title,setTitle]=useState("")
+    const [tags,setTags]=useState("")
     const [content,setContent]=useState("")
   return (
     <>
     <div className='newpost'>
       <div id='form'>
         <textarea value={title} onChange={(e)=>setTitle(e.target.value)} placeholder='New Post Title here...' id='title'/>
-        <textarea value={content} onChange={(e)=>setContent(e.target.value)} placeholder='Write your post content here...'/>
+        <input value={tags} onChange={(e)=>{setTags(e.target.value)}} placeholder='Add comma separated tags here...' id='tags'/>
+        <textarea value={content} onChange={(e)=>{setContent(e.target.value)}} placeholder='Write your post content here...'/>
       <Button variant='contained' id='publish' onClick={handleSubmit}>Publish</Button>
       </div>
       <div id='tip'>
