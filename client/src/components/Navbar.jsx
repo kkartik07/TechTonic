@@ -15,6 +15,7 @@ export default function ElevateAppBar() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('_id');
     setUsername('');
   };
 
