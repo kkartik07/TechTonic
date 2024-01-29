@@ -49,15 +49,17 @@ function Login() {
     <div>
       <div className="login-background">
         <div className="login-form shadow-lg">
-            <div className="login-title mb-2">Welcome Back</div>
+            <div className="login-title mb-2" style={{color:'black'}}>Welcome Back</div>
+            <div style={{color:'rgb(50,60,73)',textAlign:'center',marginBottom: 20,fontSize:22
+            }}>Enter your credentials to access your account</div>
             <hr/>
             <div>
                 <input type="text" placeholder="User Name" className="form-control" onChange={(e)=>setUsername(e.target.value)} />
                 <input type="password" placeholder="Password" className="form-control" onChange={(e)=>setPassword(e.target.value)}/>
             </div>
-            <button className="login-btn" onClick={handleLogin}>Login</button>
+            <button className="login-btn" onClick={handleLogin} style={{backgroundColor:'black',color:'white',border:'none'}}>Login</button>
             <Link to='/signup' className='link' style={{textAlign:'center',marginTop: 20,fontSize:18,color:'darkpurple'
-            }}>New User? Register</Link>
+            }}>Don't have a account? <span style={{textDecoration:'underline'}}>Sign Up</span></Link>
         </div>
             <Snackbar
                 anchorOrigin={{

@@ -59,14 +59,16 @@ function Signup() {
     <div>
       <div className="login-background">
         <div className="login-form shadow-lg">
-            <div className="login-title mb-2">Welcome Back</div>
+            <div className="login-title mb-2" style={{color:'black'}}>Sign Up</div>
+            <div style={{color:'rgb(50,60,73)',textAlign:'center',marginBottom: 20,fontSize:22
+            }}> Enter your details to create your account</div>
             <hr/>
             <div>
                 <input type="text" placeholder="User Name" className="form-control" onChange={(e)=>setUsername(e.target.value)} />
                 <input type="text" placeholder="Email" className="form-control" onChange={(e)=>setEmail(e.target.value)}/>
                 <input type="password" placeholder="Password" className="form-control" onChange={(e)=>setPassword(e.target.value)}/>
             </div>
-            <button className="login-btn" onClick={handleSignup}>Signup</button>
+            <button className="login-btn" onClick={handleSignup} style={{backgroundColor:'black',color:'white',border:'none'}}>Signup</button>
         </div>
             <Snackbar
                 anchorOrigin={{
