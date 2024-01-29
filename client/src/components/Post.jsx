@@ -16,20 +16,23 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Follow from './Follow';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PostDetailsPage = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [username, setUsername] = useState("Anonymous");
   const [comments, setComments] = useState([]);
   const [upvotes, setUpvotes] = useState(0);
   const [downvotes, setDownvotes] = useState(0);
-  const [currentUser,setCurrentuser]=useState("");
-  const [tags,setTags]=useState([]);
+  const [currentUser, setCurrentuser] = useState("");
+  const [tags, setTags] = useState([]);
   const [open, setOpen] = useState(false);
+  const [summary, setSummary] = useState("")
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useEffect(() => {
@@ -38,8 +41,8 @@ const PostDetailsPage = () => {
         const response = await axios.get(
           `http://localhost:3001/posts/${postId}`
         );
-        if(!response)navigate(`/`,{replace:true})
-        if(response)setPost(response.data);
+        if (!response) navigate(`/`, { replace: true })
+        if (response) setPost(response.data);
 
         let name = await axios.get(
           `http://localhost:3001/api/user/${response.data.author}`
@@ -48,10 +51,9 @@ const PostDetailsPage = () => {
         setUpvotes(response.data.upvote);
         setDownvotes(response.data.downvote);
         setTags(response.data.tags);
-          console.log(response.data.tags,'sdsdsdsdsdsdsdsds')
-        let curruser=localStorage.getItem('username');
-        if(curruser){
-          setCurrentuser((prev)=>curruser);
+        let curruser = localStorage.getItem('username');
+        if (curruser) {
+          setCurrentuser((prev) => curruser);
         }
         // Call fetchComments here, after setting the post
         if (response.data.comments.length > 0) {
@@ -81,23 +83,23 @@ const PostDetailsPage = () => {
 
     // Call the asynchronous function
     fetchPostDetails();
-  }, [postId]); // Ensure the effect runs when postId changes
-  const handleDelete=async ()=>{
-    try{
+  }, []); // Ensure the effect runs when postId changes
+  const handleDelete = async () => {
+    try {
       const headers = {
         Authorization: `Bearer ${localStorage.token}`,
         'Content-Type': 'application/json',
-    };
-      const response=await axios.delete(`http://localhost:3001/posts/${postId}`,{headers:headers})
-      if(response){
-        navigate(`/`,{replace:true})
+      };
+      const response = await axios.delete(`http://localhost:3001/posts/${postId}`, { headers: headers })
+      if (response) {
+        navigate(`/`, { replace: true })
       }
     }
-    catch(err){
+    catch (err) {
       console.log(err)
     }
   }
-  
+
   const handleUpvote = async () => {
     try {
       const response = await axios.post(
@@ -141,9 +143,52 @@ const PostDetailsPage = () => {
     }
   };
 
+  const handleSummary = async (e) => {
+    e.preventDefault();
+    if (post.content) {
+      const formdata = new FormData();
+      formdata.append("key", "5835caa89022008ea78c405d4e166f79");
+      formdata.append("txt", post.content);
+      formdata.append("sentences", 5);
+
+      const requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow'
+      };
+
+      fetch("https://api.meaningcloud.com/summarization-1.0", requestOptions)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json().then(body => ({ status: response.status, body }));
+        })
+        .then(result => {
+          const data = result.body.summary;
+          setSummary(data)
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        })
+    }
+  };
+
+  const handleCopy = async () => {
+    let text = summary;
+    try {
+      await navigator.clipboard.writeText(text);
+      console.log('Content copied to clipboard');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+
+  }
+
+
   const handleComment = async (e) => {
     e.preventDefault();
-    if(commentInputRef.current.value==="")return;
+    if (commentInputRef.current.value === "") return;
     const headers = {
       Authorization: `Bearer ${localStorage.token}`,
       'Content-Type': 'application/json',
@@ -156,13 +201,13 @@ const PostDetailsPage = () => {
       const response = await axios.post(
         `http://localhost:3001/comment`,
         body,
-        {headers:headers}
+        { headers: headers }
       );
       if (response) {
         commentInputRef.current.value = "";
         // Refetch comments after adding a new comment
-        setPost((oldPost)=>{
-          const newPost=oldPost;
+        setPost((oldPost) => {
+          const newPost = oldPost;
           newPost.comments.push(response.data);
           return newPost;
         })
@@ -179,42 +224,42 @@ const PostDetailsPage = () => {
       {post ? (
         <div className="postcontainer">
           <div className="side">
-          <div className="sidebar">
-            <div className="outbox">
-              <div className="bold">Posted By :</div> {username}
-              <Follow author={post.author}/>
-            </div>
-            <hr />
-            <div className="outbox">
-              <TrendingUpTwoToneIcon />
-              <div className="bold box">
-                Popularity : <div>{post.popularity}</div>
+            <div className="sidebar">
+              <div className="outbox">
+                <div className="bold">Posted By :</div> {username}
+                <Follow author={post.author} />
               </div>
-            </div>
-            <hr />
-            <div className="outbox">
-              <ThumbUpIcon onClick={handleUpvote} className="icon" />
-              <div className="bold box">
-                Upvotes : <div>{upvotes}</div>
+              <hr />
+              <div className="outbox">
+                <TrendingUpTwoToneIcon />
+                <div className="bold box">
+                  Popularity : <div>{post.popularity}</div>
+                </div>
               </div>
-            </div>
-            <hr />
+              <hr />
+              <div className="outbox">
+                <ThumbUpIcon onClick={handleUpvote} className="icon" />
+                <div className="bold box">
+                  Upvotes : <div>{upvotes}</div>
+                </div>
+              </div>
+              <hr />
 
-            <div className="outbox">
-              <ThumbDownIcon onClick={handleDownvote} className="icon" />
-              <div className="bold box">
-                Downvotes :<div>{downvotes}</div>
+              <div className="outbox">
+                <ThumbDownIcon onClick={handleDownvote} className="icon" />
+                <div className="bold box">
+                  Downvotes :<div>{downvotes}</div>
+                </div>
+              </div>
+              <hr />
+
+              <div>
+                <div className="bold">Posted On :</div>{" "}
+                {new Date(post.createdAt).toDateString()}
               </div>
             </div>
-            <hr />
-
-            <div>
-              <div className="bold">Posted On :</div>{" "}
-              {new Date(post.createdAt).toDateString()}
-            </div>
-          </div>
             <Create />
-            </div>
+          </div>
 
           <div>
           </div>
@@ -224,48 +269,75 @@ const PostDetailsPage = () => {
               <div>
                 <h2>{post.title}</h2>
                 <div style={{ fontSize: "20px" }}>
-                {tags.length>0 && <div id='tags'>
-                  {tags.map(tag=>(
-                    <div id='tag'>{tag}</div>
-                  ))}
-                </div>}
+                  {tags.length > 0 && <div id='tags'>
+                    {tags.map(tag => (
+                      <div id='tag'>{tag}</div>
+                    ))}
+                  </div>}
                   <span className="bold">Posted By :</span> {username}
                 </div>
               </div>
               <div>
-              {currentUser===username && <><Link to={`/edit/${post._id}`}><Button variant="contained" className="btn" style={{marginRight: 20, backgroundColor:'lightgreen',color:'black'
-              }}>Edit Post</Button></Link><Button variant="contained" className="btn" onClick={handleOpen} style={{marginRight: 20, backgroundColor:'rgb(241, 67, 70)',color:'white'
-            }}>Delete</Button>
-            <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box className='deletemodal'>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Are you sure you want to delete the post?
-              </Typography>
-              <div style={{float:'right'}}>
-              <Button style={{color:'red'}} onClick={handleDelete}>Yes</Button>
-              <Button onClick={handleClose}>Cancel</Button>
-              </div>
-            </Box>
-          </Modal></>}
-              <Button
-                variant="contained"
-                className="btn"
-                href="#comment"
+                {currentUser === username && <><Link to={`/edit/${post._id}`}><Button variant="contained" className="btn" style={{
+                  marginRight: 20, backgroundColor: 'lightgreen', color: 'black'
+                }}>Edit Post</Button></Link>
+                  <Button variant="contained" className="btn" onClick={handleOpen} style={{
+                    marginRight: 20, backgroundColor: 'rgb(241, 67, 70)', color: 'white'
+                  }}>Delete</Button>
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box className='deletemodal'>
+                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Are you sure you want to delete the post?
+                      </Typography>
+                      <div style={{ float: 'right' }}>
+                        <Button style={{ color: 'red' }} onClick={handleDelete}>Yes</Button>
+                        <Button onClick={handleClose}>Cancel</Button>
+                      </div>
+                    </Box>
+                  </Modal></>}
+                <Button
+                  variant="contained"
+                  className="btn"
+                  href="#comment"
                 >
-                Comment
-              </Button>
-                </div>
+                  Comment
+                </Button>
+                <Button variant="contained" className="btn" onClick={handleOpen} style={{
+                  marginRight: 20, backgroundColor: 'rgb(241, 67, 70)', color: 'white'
+                }}><AutoAwesomeIcon /></Button>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box className='deletemodal'>
+                    <Typography id="modal-modal-title summary" variant="h6" component="h2" value={summary} style={{ display: 'flex', justifyContent: 'center' }}>
+                      {summary ? summary :
+                        <Loader style={{
+                          marginBottom: 30, marginTop: 30,
+                        }} />
+                      }
+                    </Typography>
+                    <div style={{ float: 'right' }}>
+                      {summary && <ContentCopyIcon onClick={handleCopy} />}
+                      <Button style={{ color: 'blue' }} onClick={handleSummary}>Generate</Button>
+                      <Button onClick={handleClose} style={{ color: 'red' }}>Cancel</Button>
+                    </div>
+                  </Box>
+                </Modal>
+              </div>
             </div>
             <hr />
             <div className="postcontent">{post.content}</div>
-            {!comments &&  <div className="loader">
-          <Loader />
-        </div>}
+            {!comments && <div className="loader">
+              <Loader />
+            </div>}
             {comments.length > 0 ? (
               <div>
                 <div className="commenthead">
@@ -276,14 +348,14 @@ const PostDetailsPage = () => {
                     <BaseTextareaAutosize
                       ref={commentInputRef}
                       className="commentbox"
-                      style={{marginBottom:'20px'}}
-                      />
+                      style={{ marginBottom: '20px' }}
+                    />
                     <Button
                       variant="contained"
                       endIcon={<SendIcon />}
                       onClick={(e) => handleComment(e)}
-                      style={{marginBottom:'20px'}}
-                      >
+                      style={{ marginBottom: '20px' }}
+                    >
                       Comment
                     </Button>
                   </div>
@@ -296,8 +368,9 @@ const PostDetailsPage = () => {
               </div>
             ) : (
               <div>
-                <div className="commenthead" style={{marginBottom: 20,marginLeft: 10,
-                
+                <div className="commenthead" style={{
+                  marginBottom: 20, marginLeft: 10,
+
                 }}>
                   Comments ({comments.length})
                 </div>
@@ -311,12 +384,12 @@ const PostDetailsPage = () => {
                     id="btn2"
                     endIcon={<SendIcon />}
                     onClick={(e) => handleComment(e)}
-                    style={{marginBottom:'20px'}}
+                    style={{ marginBottom: '20px' }}
                   >
                     Comment
                   </Button>
                 </div>
-                <div style={{fontSize:'20px'}}>No comments available, Be the first one to comment!</div>
+                <div style={{ fontSize: '20px' }}>No comments available, Be the first one to comment!</div>
               </div>
             )}
           </div>

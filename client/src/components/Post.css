@@ -95,6 +95,7 @@ h2{
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400;
+    height: fit-content;
     color:black;
     background-color: whitesmoke;
     border-radius: 10px;

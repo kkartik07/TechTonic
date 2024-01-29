@@ -18,7 +18,6 @@ async function createPost(req, res) {
         const post = req.body;
         const existingUser = await User.findOne({ username: post.author });
         if(!existingUser)res.status(401).send("User not found")
-        console.log(req.body.tagsArray,'ooooooooooo')
         const newBlog = new Blog({
             content: post.content,
             author: existingUser?._id, // Make sure this is an ObjectId

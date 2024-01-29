@@ -10,7 +10,7 @@ const {login,createAccount, userAnalytics,subscribe}=require('./controllers/user
 const {getUser, getComments}=require('./controllers/api.js')
 const {auth,isSignedIn,incrementPopularity, auth2}=require('./middlewares/util.js')
 
-app.use(cors());
+app.use(cors())
 app.use(express.json());
 const PORT=process.env.PORT;
 const url=process.env.URL;
