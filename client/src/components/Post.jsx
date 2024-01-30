@@ -34,10 +34,13 @@ const PostDetailsPage = () => {
   const [downvotes, setDownvotes] = useState(0);
   const [currentUser, setCurrentuser] = useState("");
   const [tags, setTags] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [summary, setSummary] = useState("")
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose1 = () => setOpen1(false);
+  const handleClose2 = () => setOpen2(false);
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
@@ -269,14 +272,15 @@ const PostDetailsPage = () => {
 
           <div className="postbody">
             <div className="group2">
-              <div>
+              <div id='head'>
                 <h2>{post.title}</h2>
                 <div style={{ fontSize: "20px" }}>
-                  {tags.length > 0 && <div id='tags'>
+                  {tags.length >1 && <div id='tags'>
                     {tags.map(tag => (
                       <div id='tag'>{tag}</div>
                     ))}
                   </div>}
+                  {tags.length<=1 && <div id="tag">No tags provided</div>}
                   <span className="bold">Posted By :</span> {username}
                 </div>
               </div>
@@ -285,12 +289,12 @@ const PostDetailsPage = () => {
                   marginRight: 20, backgroundColor: 'lightgrey', color: 'black'
                 }}><EditIcon/></Button></Tooltip></Link>
                 <Tooltip title='Delete Post'>
-                  <Button variant="contained" className="btn" onClick={handleOpen} style={{
+                  <Button variant="contained" className="btn" onClick={handleOpen1} style={{
                     marginRight: 20,backgroundColor: 'lightgrey', color: 'black'
                   }}><DeleteIcon/></Button></Tooltip>
                   <Modal
-                    open={open}
-                    onClose={handleClose}
+                    open={open1}
+                    onClose={handleClose1}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                   >
@@ -300,7 +304,7 @@ const PostDetailsPage = () => {
                       </Typography>
                       <div style={{ float: 'right' }}>
                         <Button style={{ color: 'red' }} onClick={handleDelete}>Yes</Button>
-                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={handleClose1}>Cancel</Button>
                       </div>
                     </Box>
                   </Modal></>}
@@ -312,14 +316,14 @@ const PostDetailsPage = () => {
                   Comment
                 </Button>
                 <Tooltip title="Try our new feature! AI-Summary ">
-                <Button variant="contained" className="btn" onClick={handleOpen} style={{
+                <Button variant="contained" className="btn" onClick={handleOpen2} style={{
                   marginRight: 20, marginLeft: 20,borderRadius:'5rem',
                   color: 'purple',backgroundColor:'pink'
                 }}><AutoAwesomeIcon /></Button>
                 </Tooltip>
                 <Modal
-                  open={open}
-                  onClose={handleClose}
+                  open={open2}
+                  onClose={handleClose2}
                   aria-labelledby="modal-modal-title"
                   aria-describedby="modal-modal-description"
                 >
@@ -336,7 +340,7 @@ const PostDetailsPage = () => {
                       }}>Copy</span><ContentCopyIcon onClick={handleCopy} style={{marginRight:20,marginTop: 10,
                       }}/></>}
                       <Button style={{ color: 'blue' }} onClick={handleSummary}>Generate</Button>
-                      <Button onClick={handleClose} style={{ color: 'red' }}>Cancel</Button>
+                      <Button onClick={handleClose2} style={{ color: 'red' }}>Cancel</Button>
                     </div>
                   </Box>
                 </Modal>

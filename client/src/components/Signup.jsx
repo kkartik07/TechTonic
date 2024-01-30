@@ -52,7 +52,8 @@ function Signup() {
       navigate('/',{replace: true});
     }
     else {
-      console.log('Signup failed. Incorrect username or password.');
+      setSnackbarMessage('Signup failed. Incorrect username or password.');
+      setOpen(true);
     }
   }
   return (

@@ -10,6 +10,11 @@ const SECRET=process.env.SECRET;
 async function createAccount(req, res) {
     try{
         const userBody = req.body;
+        const usercheck = await User.findOne({ username: userBody.username });
+        if(usercheck){
+            res.status(400).send("User already exists")
+            return;
+        }
         const hashedPwd = await bcrypt.hash(userBody.password, saltRounds);
         userBody.password = hashedPwd;
         const user = new User(userBody);

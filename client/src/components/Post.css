@@ -118,3 +118,6 @@ h2{
     display: flex;
     margin-left: -16px;
 }
+#head{
+    flex:1
+}
