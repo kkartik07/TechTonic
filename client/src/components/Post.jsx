@@ -86,7 +86,7 @@ const PostDetailsPage = () => {
 
     // Call the asynchronous function
     fetchPostDetails();
-  }); // Ensure the effect runs when postId changes
+  },[]); // Ensure the effect runs when postId changes
   const handleDelete = async () => {
     try {
       const headers = {
