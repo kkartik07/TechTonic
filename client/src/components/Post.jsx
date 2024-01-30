@@ -18,6 +18,9 @@ import Modal from '@mui/material/Modal';
 import Follow from './Follow';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Tooltip from '@mui/material/Tooltip';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -278,12 +281,13 @@ const PostDetailsPage = () => {
                 </div>
               </div>
               <div>
-                {currentUser === username && <><Link to={`/edit/${post._id}`}><Button variant="contained" className="btn" style={{
-                  marginRight: 20, backgroundColor: 'lightgreen', color: 'black'
-                }}>Edit Post</Button></Link>
+                {currentUser === username.toLowerCase() && <><Link to={`/edit/${post._id}`}><Tooltip title="Edit post"><Button variant="contained" className="btn" style={{
+                  marginRight: 20, backgroundColor: 'lightgrey', color: 'black'
+                }}><EditIcon/></Button></Tooltip></Link>
+                <Tooltip title='Delete Post'>
                   <Button variant="contained" className="btn" onClick={handleOpen} style={{
-                    marginRight: 20, backgroundColor: 'rgb(241, 67, 70)', color: 'white'
-                  }}>Delete</Button>
+                    marginRight: 20,backgroundColor: 'lightgrey', color: 'black'
+                  }}><DeleteIcon/></Button></Tooltip>
                   <Modal
                     open={open}
                     onClose={handleClose}
@@ -307,9 +311,12 @@ const PostDetailsPage = () => {
                 >
                   Comment
                 </Button>
+                <Tooltip title="Try our new feature! AI-Summary ">
                 <Button variant="contained" className="btn" onClick={handleOpen} style={{
-                  marginRight: 20, backgroundColor: 'rgb(241, 67, 70)', color: 'white'
+                  marginRight: 20, marginLeft: 20,borderRadius:'5rem',
+                  color: 'purple',backgroundColor:'pink'
                 }}><AutoAwesomeIcon /></Button>
+                </Tooltip>
                 <Modal
                   open={open}
                   onClose={handleClose}
@@ -325,7 +332,9 @@ const PostDetailsPage = () => {
                       }
                     </Typography>
                     <div style={{ float: 'right' }}>
-                      {summary && <ContentCopyIcon onClick={handleCopy} />}
+                      {summary && <><span style={{fontSize:20,marginRight: 10,
+                      }}>Copy</span><ContentCopyIcon onClick={handleCopy} style={{marginRight:20,marginTop: 10,
+                      }}/></>}
                       <Button style={{ color: 'blue' }} onClick={handleSummary}>Generate</Button>
                       <Button onClick={handleClose} style={{ color: 'red' }}>Cancel</Button>
                     </div>
