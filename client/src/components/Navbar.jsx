@@ -36,6 +36,7 @@ export default function ElevateAppBar() {
               <b>Bloggify</b>
             </Link>
           </Typography>
+          <Link to='/trending' className='link' style={{marginRight:25,fontSize:20}}>Trending</Link>
           {!username && (
             <Link to='/login' className='link'>
               <Button color="inherit">Login</Button>
