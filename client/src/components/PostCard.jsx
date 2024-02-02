@@ -36,7 +36,7 @@ function PostCard({ post }) {
     getUser();
     setUpvotes(post.upvote)
     setDownvotes(post.downvote)
-  }, [])
+  }, [post])
 
   const handleUpvote = async (e) => {
     e.preventDefault();

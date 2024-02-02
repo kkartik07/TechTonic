@@ -4,17 +4,19 @@ import { Button } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 function NewPost() {
+    const [title,setTitle]=useState("")
+    const [tags,setTags]=useState("")
+    const [content,setContent]=useState("")
+
     const navigate=useNavigate()
     const handleSubmit=async()=>{
         const author=localStorage.getItem('username');
         if(!author){console.log('Login first'); return;}
-        const tagString=tags;
-        const tagsArray=tagString.split(",");
         const body={
             content,
             title,
             author,
-            tagsArray
+            tags
         }
         const headers = {
             Authorization: `Bearer ${localStorage.token}`,
@@ -33,9 +35,6 @@ function NewPost() {
             console.log(err)
         }
     }
-    const [title,setTitle]=useState("")
-    const [tags,setTags]=useState("")
-    const [content,setContent]=useState("")
   return (
     <>
     <div className='newpost'>

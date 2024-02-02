@@ -33,7 +33,7 @@ const PostDetailsPage = () => {
   const [upvotes, setUpvotes] = useState(0);
   const [downvotes, setDownvotes] = useState(0);
   const [currentUser, setCurrentuser] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tagsArray,setTagsArray]=useState([])
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [summary, setSummary] = useState("")
@@ -56,7 +56,8 @@ const PostDetailsPage = () => {
         setUsername(capitalize(name.data.username));
         setUpvotes(response.data.upvote);
         setDownvotes(response.data.downvote);
-        setTags(response.data.tags);
+        setTagsArray(response.data.tags.split(","))
+
         let curruser = localStorage.getItem('username');
         if (curruser) {
           setCurrentuser((prev) => curruser);
@@ -89,7 +90,7 @@ const PostDetailsPage = () => {
 
     // Call the asynchronous function
     fetchPostDetails();
-  },[]); // Ensure the effect runs when postId changes
+  },[]); 
   const handleDelete = async () => {
     try {
       const headers = {
@@ -275,12 +276,12 @@ const PostDetailsPage = () => {
               <div id='head'>
                 <h2>{post.title}</h2>
                 <div style={{ fontSize: "20px" }}>
-                  {tags.length >1 && <div id='tags'>
-                    {tags.map(tag => (
-                      <div id='tag'>{tag}</div>
+                  {tagsArray.length >0 && <div id='tags'>
+                    {tagsArray.map((tag,index) => (
+                      <div id='tag' key={index}>{tag}</div>
                     ))}
                   </div>}
-                  {tags.length<=1 && <div id="tag">No tags provided</div>}
+                  {tagsArray.length<=0 && <div id="tag" >No tags provided</div>}
                   <span className="bold">Posted By :</span> {username}
                 </div>
               </div>

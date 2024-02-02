@@ -37,8 +37,8 @@ const blogSchema=new mongoose.Schema({
         default:0
     },
     tags:{
-        type:Array,
-        default:[]
+        type:String,
+        default:""
     }
 });
 const Blog=mongoose.model('blog',blogSchema);

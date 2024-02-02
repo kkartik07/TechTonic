@@ -2,6 +2,7 @@ const Blog = require('../models/Blog')
 const User = require('../models/User')
 const Comment = require('../models/Comment');
 
+
 async function getAllPosts(req, res) {
     const posts = await Blog.find({});
     res.json(posts);
@@ -22,7 +23,7 @@ async function createPost(req, res) {
             content: post.content,
             author: existingUser?._id, // Make sure this is an ObjectId
             title: post.title,
-            tags:post.tagsArray
+            tags:post.tags
         }); 
         await newBlog.save();
         res.json(newBlog)
@@ -43,25 +44,34 @@ async function deletePost(req, res) {
         res.send(err)
     }
 }
-
 async function editPost(req, res) {
     try {
         const postId = req.params.postId;
+
         // Find the existing blog post
-        const existingPost = await Blog.findById(postId);
-        if (!existingPost) {
-            return res.status(404).send('Blog post not found');
-        }
-        // Update the existing blog post with new data using the spread operator
-        const updatedPost = await Blog.findByIdAndUpdate({ _id: postId }, { ...req.body }, { new: true });
-        // Save the updated blog post
-        await updatedPost.save();
-        res.json(updatedPost);
+        const existingPost = await Blog.findOneAndDelete({ _id:postId});
+
+        // Create a new post with the updated information
+        const newPostData = {
+            title: req.body.title || existingPost.title,
+            content: req.body.content || existingPost.content,
+            tags: req.body.tags || existingPost.tags,
+            author: existingPost.author, 
+            upvote: existingPost.upvote,
+            downvote: existingPost.downvote,
+            comments: [...existingPost.comments],  // Create a shallow copy of the comments array
+            popularity: existingPost.popularity
+        };
+
+        const newPost = await Blog.create(newPostData);
+
+        res.json(newPost);
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
 }
+
 
 
 async function createComment(req, res) {
