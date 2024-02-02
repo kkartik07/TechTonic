@@ -1,0 +1,33 @@
+.c {
+    margin-top: 20px;
+    overflow-x:visible;
+    position: relative;
+    margin-bottom: 450px;
+    margin-top: 70px;
+  }
+  
+  .cc{
+    position: relative;
+  }
+  .card-home {
+    display: flex;
+    position: absolute;
+    margin: 20px;
+    top: 0;
+    left: 0; /* Start from the leftmost part of the screen */
+    animation: scroll 15s linear 1s infinite;
+  }
+  
+  .pc {
+    min-height: 40px;
+    color: white;
+    margin: 5px;
+  }
+  
+  @keyframes scroll {
+    100% {
+      left: -100%; 
+      right: 100%/* Move towards left to create infinite scrolling effect */
+    }
+  }
+  
