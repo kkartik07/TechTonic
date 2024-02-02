@@ -28,3 +28,50 @@
   -webkit-text-fill-color:rgb(5, 56, 138);
 
 }
+.search-group{
+  display: flex;
+  justify-content: center;
+  margin:30px 30px 60px 30px;
+  flex-direction: column;
+}
+.search{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+#search{
+  width: 55%;
+  border-radius: 20px;
+  border:1px solid rgb(196, 194, 194);
+  font-size: 20px;
+  height:32px;
+  padding: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+#search:focus{
+  outline:none;
+  border:1px solid rgb(158, 155, 155) ;
+}
+#btn{
+  background-color: #4086cf;
+  color:white;
+  padding: 10px 30px 10px 30px;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 100;
+  margin-left: 20px;
+  border:none;
+  transition: 0.1s all ease-in;
+}
+#btn:hover{
+  background-color: #4688cedd;
+}
+#icon{
+  scale:1.5;
+}
+
+#container{
+  display: flex;
+  flex-wrap: wrap;
+}
