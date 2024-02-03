@@ -32,8 +32,8 @@ export default function ElevateAppBar() {
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to='/' className='link'>
-              <img src="/images/icon.png" width={'30px'} alt='logo' />
-              <b>Bloggify</b>
+              <img src="/images/icon.png" width={'35px'} alt='logo' />
+              <b>TechTonic</b>
             </Link>
           </Typography>
           <Link to='/trending' className='link' style={{marginRight:25,fontSize:20}}>Trending</Link>
