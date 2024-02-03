@@ -56,7 +56,7 @@ const PostDetailsPage = () => {
         setUsername(capitalize(name.data.username));
         setUpvotes(response.data.upvote);
         setDownvotes(response.data.downvote);
-        setTagsArray(response.data.tags.split(","))
+        setTagsArray(response.data.tags)
 
         let curruser = localStorage.getItem('username');
         if (curruser) {
@@ -278,7 +278,7 @@ const PostDetailsPage = () => {
                 <div style={{ fontSize: "20px" }}>
                   {tagsArray.length >0 && <div id='tags'>
                     {tagsArray.map((tag,index) => (
-                      <div id='tag' key={index}>{tag}</div>
+                      <div id='tag' key={index}>{tag.value}</div>
                     ))}
                   </div>}
                   {tagsArray.length<=0 && <div id="tag" >No tags provided</div>}
@@ -287,11 +287,11 @@ const PostDetailsPage = () => {
               </div>
               <div>
                 {currentUser === username.toLowerCase() && <><Link to={`/edit/${post._id}`}><Tooltip title="Edit post"><Button variant="contained" className="btn" style={{
-                  marginRight: 20, backgroundColor: 'lightgrey', color: 'black'
+                  marginRight: 20, backgroundColor: '#E7E7F8', color: 'black'
                 }}><EditIcon/></Button></Tooltip></Link>
                 <Tooltip title='Delete Post'>
                   <Button variant="contained" className="btn" onClick={handleOpen1} style={{
-                    marginRight: 20,backgroundColor: 'lightgrey', color: 'black'
+                    marginRight: 20,backgroundColor: '#E7E7F8', color: 'black'
                   }}><DeleteIcon/></Button></Tooltip>
                   <Modal
                     open={open1}

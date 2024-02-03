@@ -36,11 +36,10 @@ textarea{
     width:130px;
     border-radius: 8px;
 }
-#tags{
+#tagsS{
     border-radius: 10px;
     border:none;
-    min-height: 30px;
-    padding: 20px;
     font-size: 18px;
     margin-bottom: 30px;
+    width:100%;
 }
