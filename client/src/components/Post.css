@@ -1,6 +1,5 @@
 .postcontainer{
     margin: auto;
-    background-color: rgb(204, 228, 249);
     margin-top: 40px;
     border-radius: 20px;
     width:80%;
@@ -46,7 +45,7 @@ h2{
 }
 .postcontent{
     margin: 20px 0 20px 0;
-    background-color: rgb(231, 231, 232);
+    background-color: rgb(238, 238, 239);
     padding: 12px;
     border-radius: 10px;
     max-height: 500px;
@@ -116,7 +115,7 @@ h2{
 }
 #tags{
     display: flex;
-    margin-left: -16px;
+    margin-bottom: 30px;
 }
 #head{
     flex:1
