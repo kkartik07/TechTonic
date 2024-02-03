@@ -109,4 +109,25 @@ async function userAnalytics(req,res){
         res.status(401).send('Error! Try again')
     }
 }
-    module.exports={createAccount, login,userAnalytics,subscribe}
+
+    async function archive(req,res){
+        try{
+            const postId=req.params.postId;
+            const id=req.user.userId;
+            const user = await User.findById(id);
+            if (!user) {
+                return res.status(404).send('User not found');
+            }
+            if (!user.archives.includes(postId)) {
+                user.archives = [...user.archives, postId];
+                await user.save();
+                res.send('Successfully archived');
+            } else {
+                res.send('PostId already exists in archives');
+            }
+        }
+        catch(err){
+            res.status(400).send('Error! Try Again')
+        }
+    }
+    module.exports={createAccount, login,userAnalytics,subscribe,archive}

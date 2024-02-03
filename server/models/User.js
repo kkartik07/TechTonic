@@ -22,6 +22,10 @@ const userSchema=new mongoose.Schema({
     subscribers:{
         type:Number,
         default:0
+    },
+    archives:{
+        type:Array,
+        default:[]
     }
 },{timestamps:true});
 

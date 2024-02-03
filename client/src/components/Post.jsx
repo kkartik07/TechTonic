@@ -41,6 +41,8 @@ const PostDetailsPage = () => {
   const handleOpen2 = () => setOpen2(true);
   const handleClose1 = () => setOpen1(false);
   const handleClose2 = () => setOpen2(false);
+
+
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
@@ -88,7 +90,6 @@ const PostDetailsPage = () => {
       }
     };
 
-    // Call the asynchronous function
     fetchPostDetails();
   },[]); 
   const handleDelete = async () => {
@@ -192,6 +193,21 @@ const PostDetailsPage = () => {
 
   }
 
+  const handleArchive=async()=>{
+    try{
+      const headers = {
+                Authorization: `Bearer ${localStorage.token}`,
+                'Content-Type': 'application/json',
+      };
+      const response=await axios.put(`http://localhost:3001/archive/${postId}`,{},{headers:headers})
+      if(!response){
+        console.log("Failed to archive! Try again");
+        return;
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   const handleComment = async (e) => {
     e.preventDefault();
@@ -286,8 +302,9 @@ const PostDetailsPage = () => {
                 </div>
               </div>
               <div>
-
-                <ArchiveIcon id='archive'/>
+              <Tooltip title='Archive Post'>
+                <ArchiveIcon id='archive' onClick={handleArchive}/>
+                </Tooltip>
                 {currentUser === username.toLowerCase() && <><Link to={`/edit/${post._id}`}><Tooltip title="Edit post"><Button variant="contained" className="btn" style={{
                   marginRight: 20, backgroundColor: '#E7E7F8', color: 'black'
                 }}><EditIcon/></Button></Tooltip></Link>
