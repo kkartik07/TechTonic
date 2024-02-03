@@ -31,13 +31,18 @@ function Home() {
   }, []);
 
   const handleSearch = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase();
     setSearch(value);
   
     if (value.length === 0) {
       setFiltered([]);
     } else {
-      const filteredPosts = posts.filter(post => post.tags.includes(value));
+      const filteredPosts = posts.filter(post => {
+        let tagsString="";
+        for(let i=0;i<post.tags.length;i++)tagsString+=post.tags[i].value;
+        tagsString=tagsString.toLowerCase()
+        return tagsString.includes(value)
+      });
       setFiltered(filteredPosts);
     }
   };

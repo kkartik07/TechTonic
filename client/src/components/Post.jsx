@@ -21,7 +21,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
+import ArchiveIcon from '@mui/icons-material/Archive';
 import { Link, useNavigate } from "react-router-dom";
 
 const PostDetailsPage = () => {
@@ -286,9 +286,12 @@ const PostDetailsPage = () => {
                 </div>
               </div>
               <div>
+
+                <ArchiveIcon id='archive'/>
                 {currentUser === username.toLowerCase() && <><Link to={`/edit/${post._id}`}><Tooltip title="Edit post"><Button variant="contained" className="btn" style={{
                   marginRight: 20, backgroundColor: '#E7E7F8', color: 'black'
                 }}><EditIcon/></Button></Tooltip></Link>
+
                 <Tooltip title='Delete Post'>
                   <Button variant="contained" className="btn" onClick={handleOpen1} style={{
                     marginRight: 20,backgroundColor: '#E7E7F8', color: 'black'

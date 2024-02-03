@@ -36,7 +36,7 @@ export default function ElevateAppBar() {
               <b>TechTonic</b>
             </Link>
           </Typography>
-          <Link to='/trending' className='link' style={{marginRight:25,fontSize:20}}>Trending</Link>
+          <Link to='/trending' className='link' style={{marginRight:25,fontSize:20}}><Button variant='outlined' color={'primary'}>Trending</Button></Link>
           {!username && (
             <Link to='/login' className='link'>
               <Button color="inherit">Login</Button>

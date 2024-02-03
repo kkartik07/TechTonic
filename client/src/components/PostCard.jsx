@@ -66,8 +66,8 @@ function PostCard({ post }) {
       <Link to={`/posts/${post._id}`} className='link'>
         <div className='post'>
           <div id='card'>
-            <div><p style={{display:'flex', alignItems:'center',float:'right',fontWeight:600}}><span style={{marginRight: 12,fontSize:20
-            }}>{username ? username : "Anonymous"}</span> <Follow author={post.author}/></p>
+            <div><div style={{display:'flex', alignItems:'center',float:'right',fontWeight:600}}><span style={{marginRight: 12,fontSize:20
+            }}>{username ? username : "Anonymous"}</span> <Follow author={post.author}/></div>
               <div><b>{post.title}</b></div>
               <div className='content'>{truncatedContent}</div>
             </div>
