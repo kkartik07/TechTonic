@@ -4,11 +4,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import './Navbar.css';
-import { capitalize } from '@mui/material';
+import { Tooltip, capitalize } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Create from './Create';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import ArchiveIcon from '@mui/icons-material/Archive';
 export default function ElevateAppBar() {
   const [username, setUsername] = useState('');
 
@@ -45,6 +45,12 @@ export default function ElevateAppBar() {
           {username &&
             <li className="user-info">
               <div><Create /></div>
+              <Link to='/archive'>
+                <Tooltip title='Your Archived Posts'>
+                <ArchiveIcon style={{fontSize:40,marginLeft: 20,marginRight:-15,color:'lightblue'}}/>
+                </Tooltip>
+              </Link>
+
               <Link to='/profile'>
               <img src="/images/avatar.png" width="32px" alt="avatar" className="avatar" />
               </Link>

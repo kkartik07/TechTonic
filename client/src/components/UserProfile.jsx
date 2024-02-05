@@ -35,7 +35,6 @@ function UserProfile() {
       };
       const response = await axios.get(`http://localhost:3001/profile/${id}`, { headers: headers });
       if (!response) return;
-      console.log(response.data.posts)
       setPosts(response.data.posts);
       setDetails(response.data.details);
     };

@@ -10,6 +10,7 @@ import EditPost from './components/EditPost';
 import UserProfile from './components/UserProfile';
 import Trending from './components/Trending';
 import NotFound from './components/NotFound';
+import Archive from './components/Archive';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/edit/:id' element={<><Navbar/><EditPost/></>}/>
           <Route path='/trending' element={<><Navbar/><Trending/></>}/>
           <Route path='/profile' element={<><Navbar/><UserProfile/></>}/>
+          <Route path='/archive' element={<><Navbar/><Archive/></>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
       </div>
