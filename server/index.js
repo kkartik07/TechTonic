@@ -31,8 +31,8 @@ app.post('/posts',auth,createPost)
 app.delete('/posts/:postId',auth,deletePost);
 app.put('/posts/:postId',auth,editPost);
 app.get('/posts/:postId',incrementPopularity,getPost);
-app.post('/posts/:postId/upvote', upvotePost);
-app.post('/posts/:postId/downvote', downvotePost);
+app.post('/posts/:postId/upvote',isSignedIn, upvotePost);
+app.post('/posts/:postId/downvote',isSignedIn, downvotePost);
 app.post('/comment',isSignedIn,createComment);
 
 app.get('/api/user/:id',getUser);
