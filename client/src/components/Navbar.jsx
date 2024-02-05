@@ -9,14 +9,19 @@ import { Link } from 'react-router-dom';
 import Create from './Create';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArchiveIcon from '@mui/icons-material/Archive';
+import { useNavigate } from 'react-router-dom'
+
 export default function ElevateAppBar() {
   const [username, setUsername] = useState('');
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('_id');
     setUsername('');
+    navigate('/', { replace: true })
+
   };
 
   useEffect(() => {
@@ -45,12 +50,15 @@ export default function ElevateAppBar() {
           {username &&
             <li className="user-info">
               <div><Create /></div>
+              <Button>
+
               <Link to='/archive'>
                 <Tooltip title='Your Archived Posts'>
-                <ArchiveIcon style={{fontSize:40,marginLeft: 20,marginRight:-15,color:'lightblue'}}/>
+                <ArchiveIcon style={{fontSize:40,marginLeft: 20,marginRight: -20,
+                 color:'lightblue'}}/>
                 </Tooltip>
               </Link>
-
+              </Button>
               <Link to='/profile'>
               <img src="/images/avatar.png" width="32px" alt="avatar" className="avatar" />
               </Link>
