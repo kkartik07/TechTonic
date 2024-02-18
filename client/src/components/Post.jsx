@@ -33,7 +33,7 @@ const PostDetailsPage = () => {
   const [upvotes, setUpvotes] = useState(0);
   const [downvotes, setDownvotes] = useState(0);
   const [currentUser, setCurrentuser] = useState("");
-  const [tagsArray,setTagsArray]=useState([])
+  const [tagsArray, setTagsArray] = useState([])
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [summary, setSummary] = useState("")
@@ -91,7 +91,7 @@ const PostDetailsPage = () => {
     };
 
     fetchPostDetails();
-  },[]); 
+  }, []);
   const handleDelete = async () => {
     try {
       const headers = {
@@ -110,8 +110,12 @@ const PostDetailsPage = () => {
 
   const handleUpvote = async () => {
     try {
+      const headers = {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+      };
       const response = await axios.post(
-        `http://localhost:3001/posts/${postId}/upvote`
+        `http://localhost:3001/posts/${postId}/upvote`, {}, { headers: headers }
       );
       if (response) {
         setUpvotes(upvotes + 1);
@@ -122,8 +126,12 @@ const PostDetailsPage = () => {
   };
   const handleDownvote = async () => {
     try {
+      const headers = {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+      };
       const response = await axios.post(
-        `http://localhost:3001/posts/${postId}/downvote`
+        `http://localhost:3001/posts/${postId}/downvote`, {}, { headers: headers }
       );
       if (response) {
         setDownvotes(downvotes + 1);
@@ -193,18 +201,18 @@ const PostDetailsPage = () => {
 
   }
 
-  const handleArchive=async()=>{
-    try{
+  const handleArchive = async () => {
+    try {
       const headers = {
-                Authorization: `Bearer ${localStorage.token}`,
-                'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
       };
-      const response=await axios.put(`http://localhost:3001/archive/${postId}`,{},{headers:headers})
-      if(!response){
+      const response = await axios.put(`http://localhost:3001/archive/${postId}`, {}, { headers: headers })
+      if (!response) {
         console.log("Failed to archive! Try again");
         return;
       }
-    }catch(err){
+    } catch (err) {
       console.log(err)
     }
   }
@@ -292,27 +300,27 @@ const PostDetailsPage = () => {
               <div id='head'>
                 <h2>{post.title}</h2>
                 <div style={{ fontSize: "20px" }}>
-                  {tagsArray.length >0 && <div id='tags'>
-                    {tagsArray.map((tag,index) => (
+                  {tagsArray.length > 0 && <div id='tags'>
+                    {tagsArray.map((tag, index) => (
                       <div id='tag' key={index}>{tag.value}</div>
                     ))}
                   </div>}
-                  {tagsArray.length<=0 && <div id="tag" >No tags provided</div>}
+                  {tagsArray.length <= 0 && <div id="tag" >No tags provided</div>}
                   <span className="bold">Posted By :</span> {username}
                 </div>
               </div>
               <div>
-              <Tooltip title='Archive Post'>
-                <ArchiveIcon id='archive' onClick={handleArchive}/>
+                <Tooltip title='Archive Post'>
+                  <ArchiveIcon id='archive' onClick={handleArchive} />
                 </Tooltip>
                 {currentUser === username.toLowerCase() && <><Link to={`/edit/${post._id}`}><Tooltip title="Edit post"><Button variant="contained" className="btn" style={{
                   marginRight: 20, backgroundColor: '#E7E7F8', color: 'black'
-                }}><EditIcon/></Button></Tooltip></Link>
+                }}><EditIcon /></Button></Tooltip></Link>
 
-                <Tooltip title='Delete Post'>
-                  <Button variant="contained" className="btn" onClick={handleOpen1} style={{
-                    marginRight: 20,backgroundColor: '#E7E7F8', color: 'black'
-                  }}><DeleteIcon/></Button></Tooltip>
+                  <Tooltip title='Delete Post'>
+                    <Button variant="contained" className="btn" onClick={handleOpen1} style={{
+                      marginRight: 20, backgroundColor: '#E7E7F8', color: 'black'
+                    }}><DeleteIcon /></Button></Tooltip>
                   <Modal
                     open={open1}
                     onClose={handleClose1}
@@ -337,10 +345,10 @@ const PostDetailsPage = () => {
                   Comment
                 </Button>
                 <Tooltip title="Try our new feature! AI-Summary ">
-                <Button variant="contained" className="btn" onClick={handleOpen2} style={{
-                  marginRight: 20, marginLeft: 20,borderRadius:'5rem',
-                  color: 'purple',backgroundColor:'pink'
-                }}><AutoAwesomeIcon /></Button>
+                  <Button variant="contained" className="btn" onClick={handleOpen2} style={{
+                    marginRight: 20, marginLeft: 20, borderRadius: '5rem',
+                    color: 'purple', backgroundColor: 'pink'
+                  }}><AutoAwesomeIcon /></Button>
                 </Tooltip>
                 <Modal
                   open={open2}
@@ -357,9 +365,11 @@ const PostDetailsPage = () => {
                       }
                     </Typography>
                     <div style={{ float: 'right' }}>
-                      {summary && <><span style={{fontSize:20,marginRight: 10,
-                      }}>Copy</span><ContentCopyIcon onClick={handleCopy} style={{marginRight:20,marginTop: 10,
-                      }}/></>}
+                      {summary && <><span style={{
+                        fontSize: 20, marginRight: 10,
+                      }}>Copy</span><ContentCopyIcon onClick={handleCopy} style={{
+                        marginRight: 20, marginTop: 10,
+                      }} /></>}
                       <Button style={{ color: 'blue' }} onClick={handleSummary}>Generate</Button>
                       <Button onClick={handleClose2} style={{ color: 'red' }}>Cancel</Button>
                     </div>

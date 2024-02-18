@@ -41,8 +41,13 @@ function PostCard({ post }) {
   const handleUpvote = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3001/posts/${post._id}/upvote`);
+      const headers = {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+      };
+      const response = await axios.post(`http://localhost:3001/posts/${post._id}/upvote`, {}, { headers: headers });
       if (response) {
+        console.log('sdsd')
         setUpvotes(upvotes + 1);
       }
     } catch (error) {
@@ -53,7 +58,11 @@ function PostCard({ post }) {
   const handleDownvote = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3001/posts/${post._id}/downvote`);
+      const headers = {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+      };
+      const response = await axios.post(`http://localhost:3001/posts/${post._id}/downvote`, {}, { headers: headers });
       if (response) {
         setDownvotes(downvotes + 1);
       }
@@ -66,8 +75,9 @@ function PostCard({ post }) {
       <Link to={`/posts/${post._id}`} className='link'>
         <div className='post'>
           <div id='card'>
-            <div><div style={{display:'flex', alignItems:'center',float:'right',fontWeight:600}}><span style={{marginRight: 12,fontSize:20
-            }}>{username ? username : "Anonymous"}</span> <Follow author={post.author}/></div>
+            <div><div style={{ display: 'flex', alignItems: 'center', float: 'right', fontWeight: 600 }}><span style={{
+              marginRight: 12, fontSize: 20
+            }}>{username ? username : "Anonymous"}</span> <Follow author={post.author} /></div>
               <div><b>{post.title}</b></div>
               <div className='content'>{truncatedContent}</div>
             </div>
