@@ -33,7 +33,7 @@ function Follow({ author }) {
                 'Content-Type': 'application/json',
             };
 
-            const response = await axios.patch(`http://localhost:3001/subscribe/${author}`, {}, { headers: headers });
+            const response = await axios.patch(`https://techtonic-1.onrender.com/subscribe/${author}`, {}, { headers: headers });
 
             if (!response) {
                 setSnackbarMessage('Failed to subscribe');

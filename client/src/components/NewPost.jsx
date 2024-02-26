@@ -77,7 +77,7 @@ function NewPost() {
             'Content-Type': 'application/json',
         };
         try{
-            const response=await axios.post('http://localhost:3001/posts',
+            const response=await axios.post('https://techtonic-1.onrender.com/posts',
             body,{headers:headers});
             if(response){
                 setContent('');

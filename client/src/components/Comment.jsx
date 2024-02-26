@@ -13,7 +13,7 @@ function Comment({comment}) {
   useEffect(()=>{
     async function getUser() {
       try {
-        let user = await axios.get(`http://localhost:3001/api/user/${comment.author}`);
+        let user = await axios.get(`https://techtonic-1.onrender.com/api/user/${comment.author}`);
         if (user) setUsername(capitalize(user.data.username))
       } catch (err) {
         console.log(err)

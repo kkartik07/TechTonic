@@ -6,7 +6,7 @@ function Trending() {
   const [posts,setPosts]=useState([]);
   useEffect(() => {
     const getPosts = async () => {
-        const response = await axios.get(`http://localhost:3001/posts`);
+        const response = await axios.get(`https://techtonic-1.onrender.com/posts`);
         if(!response)return;
         const newPosts=response.data.sort((a,b)=>{
             return b.popularity-a.popularity;

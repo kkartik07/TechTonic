@@ -33,7 +33,7 @@ function UserProfile() {
         Authorization: `Bearer ${localStorage.token}`,
         'Content-Type': 'application/json',
       };
-      const response = await axios.get(`http://localhost:3001/profile/${id}`, { headers: headers });
+      const response = await axios.get(`https://techtonic-1.onrender.com/profile/${id}`, { headers: headers });
       if (!response) return;
       setPosts(response.data.posts);
       setDetails(response.data.details);
