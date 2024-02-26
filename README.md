@@ -33,7 +33,7 @@ To run this application locally, follow these steps:
 ```
 
 ```
-   cd ../server
+   cd server
    npm install
    node index.js
 ```
