@@ -1,4 +1,4 @@
-# Tech Blog App - TechTOnic
+# Tech Blog App - TechTonic
 
 This is a MERN (MongoDB, Express.js, React.js, Node.js) application where users can post tech blogs. It provides a platform for users to share their knowledge and experiences in the tech field.
 
