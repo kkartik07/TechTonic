@@ -10,13 +10,13 @@ function Archive() {
         async function getPosts() {
           try {
             const id = localStorage.getItem('_id');
-            const userResponse = await axios.get(`https://techtonic-1.onrender.com/api/user/${id}`);
+            const userResponse = await axios.get(`https://techtonic-2.onrender.com/api/user/${id}`);
             const user = userResponse.data;
             setIds((prev) => user.archives);
     
             if (user.archives.length === 0) return;
     
-            const allPostsResponse = await axios.get(`https://techtonic-1.onrender.com/posts`);
+            const allPostsResponse = await axios.get(`https://techtonic-2.onrender.com/posts`);
             const allPosts = allPostsResponse.data;
             const filteredPosts = allPosts.filter((post) => user.archives.includes(post._id));
             setPosts(() => filteredPosts);

@@ -64,7 +64,7 @@ function EditPost() {
     const fetchPostDetails = async () => {
       try {
         const response = await axios.get(
-          `https://techtonic-1.onrender.com/posts/${id}`
+          `https://techtonic-2.onrender.com/posts/${id}`
         );
         setContent(() => response.data.content);
         setTitle(() => response.data.title);
@@ -92,7 +92,7 @@ function EditPost() {
       'Content-Type': 'application/json',
     };
     try {
-      const response = await axios.put(`https://techtonic-1.onrender.com/posts/${id}`,
+      const response = await axios.put(`https://techtonic-2.onrender.com/posts/${id}`,
         body, { headers: headers });
         if (response) {
           setContent('');

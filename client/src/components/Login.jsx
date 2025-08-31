@@ -27,7 +27,7 @@ function Login() {
     }
     try{
 
-      const response=await axios.post('https://techtonic-1.onrender.com/signin',body);
+      const response=await axios.post('https://techtonic-2.onrender.com/signin',body);
       if(response){
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('_id', response.data._id);

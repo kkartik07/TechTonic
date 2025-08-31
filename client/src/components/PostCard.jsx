@@ -27,7 +27,7 @@ function PostCard({ post }) {
   useEffect(() => {
     async function getUser() {
       try {
-        let user = await axios.get(`https://techtonic-1.onrender.com/api/user/${post.author}`);
+        let user = await axios.get(`https://techtonic-2.onrender.com/api/user/${post.author}`);
         if (user) setUsername(capitalize(user.data.username))
       } catch (err) {
         console.log(err)
@@ -45,7 +45,7 @@ function PostCard({ post }) {
         Authorization: `Bearer ${localStorage.token}`,
         'Content-Type': 'application/json',
       };
-      const response = await axios.post(`https://techtonic-1.onrender.com/posts/${post._id}/upvote`, {}, { headers: headers });
+      const response = await axios.post(`https://techtonic-2.onrender.com/posts/${post._id}/upvote`, {}, { headers: headers });
       if (response) {
         console.log('sdsd')
         setUpvotes(upvotes + 1);
@@ -62,7 +62,7 @@ function PostCard({ post }) {
         Authorization: `Bearer ${localStorage.token}`,
         'Content-Type': 'application/json',
       };
-      const response = await axios.post(`https://techtonic-1.onrender.com/posts/${post._id}/downvote`, {}, { headers: headers });
+      const response = await axios.post(`https://techtonic-2.onrender.com/posts/${post._id}/downvote`, {}, { headers: headers });
       if (response) {
         setDownvotes(downvotes + 1);
       }

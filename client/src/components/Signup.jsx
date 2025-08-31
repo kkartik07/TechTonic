@@ -44,7 +44,7 @@ function Signup() {
       password,
       email
     }
-    const response=await axios.post('https://techtonic-1.onrender.com/signup',body);
+    const response=await axios.post('https://techtonic-2.onrender.com/signup',body);
     if(response){
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('_id', response.data._id);

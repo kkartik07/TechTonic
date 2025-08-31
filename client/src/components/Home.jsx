@@ -7,7 +7,7 @@ import Carousal from './Carousal';
 import TrendingUpTwoTone from '@mui/icons-material/TrendingUpTwoTone';
 import SearchIcon from '@mui/icons-material/Search';
 
-const BASE_URL = 'https://techtonic-1.onrender.com';
+const BASE_URL = 'https://techtonic-2.onrender.com';
 
 function Home() {
   const [posts, setPosts] = useState([]);

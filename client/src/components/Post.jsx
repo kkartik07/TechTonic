@@ -47,13 +47,13 @@ const PostDetailsPage = () => {
     const fetchPostDetails = async () => {
       try {
         const response = await axios.get(
-          `https://techtonic-1.onrender.com/posts/${postId}`
+          `https://techtonic-2.onrender.com/posts/${postId}`
         );
         if (!response) navigate(`/`, { replace: true })
         if (response) setPost(response.data);
 
         let name = await axios.get(
-          `https://techtonic-1.onrender.com/api/user/${response.data.author}`
+          `https://techtonic-2.onrender.com/api/user/${response.data.author}`
         );
         setUsername(capitalize(name.data.username));
         setUpvotes(response.data.upvote);
@@ -79,7 +79,7 @@ const PostDetailsPage = () => {
 
         for (const id of commentIds) {
           const commentResponse = await axios.get(
-            `https://techtonic-1.onrender.com/api/comments/${id}`
+            `https://techtonic-2.onrender.com/api/comments/${id}`
           );
           commentsArray.push(commentResponse.data);
         }
@@ -98,7 +98,7 @@ const PostDetailsPage = () => {
         Authorization: `Bearer ${localStorage.token}`,
         'Content-Type': 'application/json',
       };
-      const response = await axios.delete(`https://techtonic-1.onrender.com/posts/${postId}`, { headers: headers })
+      const response = await axios.delete(`https://techtonic-2.onrender.com/posts/${postId}`, { headers: headers })
       if (response) {
         navigate(`/`, { replace: true })
       }
@@ -115,7 +115,7 @@ const PostDetailsPage = () => {
         'Content-Type': 'application/json',
       };
       const response = await axios.post(
-        `https://techtonic-1.onrender.com/posts/${postId}/upvote`, {}, { headers: headers }
+        `https://techtonic-2.onrender.com/posts/${postId}/upvote`, {}, { headers: headers }
       );
       if (response) {
         setUpvotes(upvotes + 1);
@@ -131,7 +131,7 @@ const PostDetailsPage = () => {
         'Content-Type': 'application/json',
       };
       const response = await axios.post(
-        `https://techtonic-1.onrender.com/posts/${postId}/downvote`, {}, { headers: headers }
+        `https://techtonic-2.onrender.com/posts/${postId}/downvote`, {}, { headers: headers }
       );
       if (response) {
         setDownvotes(downvotes + 1);
@@ -149,7 +149,7 @@ const PostDetailsPage = () => {
 
       for (const id of commentIds) {
         const commentResponse = await axios.get(
-          `https://techtonic-1.onrender.com/api/comments/${id}`
+          `https://techtonic-2.onrender.com/api/comments/${id}`
         );
         commentsArray.push(commentResponse.data);
       }
@@ -207,7 +207,7 @@ const PostDetailsPage = () => {
         Authorization: `Bearer ${localStorage.token}`,
         'Content-Type': 'application/json',
       };
-      const response = await axios.put(`https://techtonic-1.onrender.com/archive/${postId}`, {}, { headers: headers })
+      const response = await axios.put(`https://techtonic-2.onrender.com/archive/${postId}`, {}, { headers: headers })
       if (!response) {
         console.log("Failed to archive! Try again");
         return;
@@ -230,7 +230,7 @@ const PostDetailsPage = () => {
         content: commentInputRef.current.value,
       };
       const response = await axios.post(
-        `https://techtonic-1.onrender.com/comment`,
+        `https://techtonic-2.onrender.com/comment`,
         body,
         { headers: headers }
       );
