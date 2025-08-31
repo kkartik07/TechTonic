@@ -8,7 +8,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import TrendingUpTwoToneIcon from "@mui/icons-material/TrendingUpTwoTone";
 import Loader from "@mui/material/CircularProgress";
-import { TextareaAutosize as BaseTextareaAutosize } from "@mui/base/TextareaAutosize";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 import SendIcon from "@mui/icons-material/Send";
 import { capitalize } from "@mui/material";
 import Create from "./Create";
@@ -389,7 +389,7 @@ const PostDetailsPage = () => {
                 </div>
                 <div>
                   <div id="comment">
-                    <BaseTextareaAutosize
+                    <TextareaAutosize
                       ref={commentInputRef}
                       className="commentbox"
                       style={{ marginBottom: '20px' }}
@@ -419,7 +419,7 @@ const PostDetailsPage = () => {
                   Comments ({comments.length})
                 </div>
                 <div id="comment" className="commenthead">
-                  <BaseTextareaAutosize
+                  <TextareaAutosize
                     ref={commentInputRef}
                     className="commentbox"
                   />
